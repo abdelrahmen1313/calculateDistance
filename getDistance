@@ -1,0 +1,37 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+
+
+
+
+
+double? getDistance(
+  LatLng location1,
+  LatLng location2,
+) {
+
+
+  // calculate and return distance between two points
+  double radians(double degrees) => degrees * 3.1415926535897932 / 180;
+  double distanceBetweenPoints(LatLng location1, LatLng location2) {
+    final int earthRadius = 6371; // in KM
+    final double lat1 = radians(location1.latitude);
+    final double lat2 = radians(location2.latitude);
+    final double deltaLat = radians(location2.latitude - location1.latitude);
+    final double deltaLng = radians(location2.longitude - location1.longitude);
+
+    final double a = math.sin(deltaLat / 2) * math.sin(deltaLat / 2) +
+        math.cos(lat1) *
+            math.cos(lat2) *
+            math.sin(deltaLng / 2) *
+            math.sin(deltaLng / 2);
+    final double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+    final double distance = earthRadius * c;
+
+    return distance;
+  }
+
+}
